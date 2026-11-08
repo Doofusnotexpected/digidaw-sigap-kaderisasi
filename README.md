@@ -3,7 +3,7 @@
 
 🔗 **Live Demo:** https://digidaw-sigap-kaderisasi-y8qu.vercel.app
 
-# SIGAP Kaderisasi - Sistem Integritas Kaderisasi & Audit Suksesi Ormawa
+# Sistem Integritas Kaderisasi & Audit Suksesi Ormawa
 
 > **Finalis Hackathon CR YOUTH 2026 - Tim Digidaw (Universitas Telkom)**  
 > Subtema: *Future Leadership and Human Capital Management*
