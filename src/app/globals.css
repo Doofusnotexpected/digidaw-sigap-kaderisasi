@@ -1,3 +1,246 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ---------- Token warna SIGAP ----------
+   Merah Telkom dipakai hemat: logo, penanda aktif, peringkat teratas.
+   Struktur memakai navy dan abu-abu dingin. */
+:root {
+  --paper: #eef1f3;
+  --surface: #ffffff;
+  --surface-2: #f6f8f9;
+  --ink: #17202b;
+  --graphite: #5a6573;
+  --muted: #8b94a0;
+  --line: #d9dee3;
+  --line-strong: #c3cad2;
+
+  --navy: #1b2a3b;
+  --navy-2: #24364a;
+  --navy-line: #33475d;
+  --navy-text: #b9c5d3;
+
+  --telkom: #b6252a;
+  --telkom-soft: #f7e9e9;
+
+  --seal: #2e6b5a;
+  --seal-soft: #e2efe9;
+  --amber: #9a6411;
+  --amber-soft: #fbf0db;
+  --broken: #b6252a;
+
+  --font-sans: var(--font-jakarta, 'Plus Jakarta Sans'), 'Inter', system-ui, sans-serif;
+  --font-mono: var(--font-jbmono, 'JetBrains Mono'), ui-monospace, 'DejaVu Sans Mono', monospace;
+}
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-mono,
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: normal;
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.on-navy :focus-visible {
+  outline-color: #ffffff;
+}
+
+/* ---------- Permukaan ---------- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.inset {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+/* ---------- Tombol ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  white-space: nowrap;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--navy);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--navy-2);
+}
+.btn-quiet {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btn-quiet:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--graphite);
+}
+.btn-ghost:hover:not(:disabled) {
+  color: var(--ink);
+  background: rgba(23, 32, 43, 0.05);
+}
+.btn-danger {
+  background: var(--surface);
+  color: var(--broken);
+  border-color: #e3b9bb;
+}
+.btn-danger:hover:not(:disabled) {
+  background: var(--telkom-soft);
+}
+
+/* ---------- Form ---------- */
+.field {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ink);
+}
+.field::placeholder {
+  color: var(--muted);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(27, 42, 59, 0.12);
+}
+.field-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+}
+
+/* ---------- Bar aspek ---------- */
+.meter {
+  height: 6px;
+  border-radius: 999px;
+  background: #e4e8ec;
+  overflow: hidden;
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--navy);
+  transition: width 300ms ease;
+}
+
+/* ---------- Rantai segel (elemen khas) ---------- */
+.seal {
+  position: relative;
+  flex: 0 0 auto;
+  width: 112px;
+  padding: 0.6rem 0.65rem 0.55rem;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  text-align: left;
+  transition: background-color 260ms ease, border-color 260ms ease, transform 260ms ease;
+}
+.seal:hover {
+  border-color: var(--line-strong);
+}
+.seal[data-active='true'] {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 1px var(--navy);
+}
+.seal[data-status='utuh'] .seal-dot {
+  background: var(--seal);
+}
+.seal[data-status='diubah'] {
+  background: var(--telkom-soft);
+  border-color: #e0a9ac;
+  transform: translateY(-3px);
+}
+.seal[data-status='diubah'] .seal-dot {
+  background: var(--broken);
+}
+.seal[data-status='terdampak'] {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--amber-soft),
+    var(--amber-soft) 6px,
+    #f6e6c6 6px,
+    #f6e6c6 12px
+  );
+  border-color: #e7cf9f;
+}
+.seal[data-status='terdampak'] .seal-dot {
+  background: var(--amber);
+}
+.seal-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.link {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 2px;
+  align-self: center;
+  background: var(--line-strong);
+  transition: background-color 260ms ease, opacity 260ms ease;
+}
+.link[data-broken='true'] {
+  background: transparent;
+  border-top: 2px dashed var(--amber);
+  height: 0;
+}
+
+/* Satu-satunya gerak otomatis: kerusakan merambat sepanjang rantai */
+@media (prefers-reduced-motion: reduce) {
+  .seal,
+  .link,
+  .meter > span {
+    transition: none !important;
+  }
+}
+
+.scroll-x {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+/* Anak grid boleh menyusut; mencegah teks panjang melebarkan layar di ponsel */
+.grid > * {
+  min-width: 0;
+}

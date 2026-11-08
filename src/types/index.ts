@@ -3,6 +3,9 @@ export type RoleType = 'ANGGOTA' | 'KABID' | 'PEMBINA' | 'KEMAHASISWAAN';
 export type OrmawaId = 'BEM_TELU' | 'UKM_SEARCH';
 export type CabinetRoleKey = 'KETUA' | 'WAKIL_KETUA' | 'BENDAHARA' | 'KABID_KADERISASI';
 
+// Empat jenis pengguna sesuai proposal (Bab 4.1)
+export type PeranDemo = 'ANGGOTA' | 'VERIFIKATOR' | 'PANITIA' | 'AUDITOR';
+
 // 1. Yg pengguna (Sesuai Kebutuhan Bab Teknis Devan)
 export interface Pengguna {
   id: string;
@@ -32,6 +35,9 @@ export interface EntriKontribusi {
   verifikatorId: string;
   verifikatorNama: string;
   waktuVerifikasi: string;
+  periode?: string;
+  uraian?: string;
+  catatanVerifikator?: string;
 }
 
 // 3. Yg segel_hash (Rantai Integritas Kriptografis)
@@ -50,6 +56,7 @@ export interface PeranKabinet {
   namaPeran: string;
   kandidatTerpilihId: string | null;
   skorKecocokan: number;
+  alasanTertulis?: string;
 }
 
 // 5. Yg audit_log (Log Justifikasi Tertulis & Deteksi Anomali)
@@ -60,4 +67,5 @@ export interface AuditLog {
   aksi: string;
   keteranganTertulis: string; // Wajib diisi jika melanggar rekomendasi peringkat #1
   penandaPola: string[];
+  ormawaId?: OrmawaId;
 }
