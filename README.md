@@ -59,8 +59,8 @@ Aplikasi menyediakan *Mockup Role Switcher* instan serta akun uji coba berikut (
 
 ```bash
 # 1. Unduh repositori
-git clone [https://github.com/Doofusnotexpected/digidaw-sigap-kaderisasi.git](https://github.com/Doofusnotexpected/digidaw-sigap-kaderisasi.git)
-cd digidaw-sigap-kaderisasi
+   git clone https://github.com/Doofusnotexpected/digidaw-sigap-kaderisasi.git
+   cd digidaw-sigap-kaderisasi
 
 # 2. Pasang dependensi
 npm install
@@ -70,3 +70,6 @@ node test-checkpoint1.mjs
 
 # 4. Jalankan aplikasi web lokal
 npm run dev
+
+# 5. Buka peramban dan akses alamat
+http://localhost:3000
