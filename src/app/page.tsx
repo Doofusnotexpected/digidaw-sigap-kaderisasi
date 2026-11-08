@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { DATA_PENGGUNA, INITIAL_ENTRI, INITIAL_SLOT_PERAN } from '@/data/seedData';
 import { hitungMatriksSAW, periksaPenandaPola } from '@/lib/sawEngine';
-import { verifikasiIntegritasRantai } from '@/lib/hashEngine';
+import { verifikasiIntegritasRantai, segelEntriBaru } from '@/lib/hashEngine';
 import { RoleType, OrmawaId, CabinetRoleKey, EntriKontribusi, SegelHash, PeranKabinet } from '@/types';
 
 export default function SigapDashboard() {
@@ -38,28 +38,23 @@ export default function SigapDashboard() {
   const [alasanTertulis, setAlasanTertulis] = useState('');
   const [errorAlasan, setErrorAlasan] = useState('');
 
-  // 1. Initial Hash Chain
+  // 1. Generate Authentic Initial Hash Chain on Mount (Starts 100% VALID)
   useEffect(() => {
-    const listAwal: SegelHash[] = [
-      {
-        id: 'segel-1',
-        entriId: 'entri-101',
-        hashSebelumnya: '0000000000000000000000000000000000000000000000000000000000000000',
-        hashSaatIni: '32c3df4bf1c0b8eda60f8d655ce0defb32ce820861baa7c129ff7f59646b0717',
-        waktuPenyegelan: '2026-09-15T10:00:00Z',
-        statusIntegritas: 'VALID',
-      },
-      {
-        id: 'segel-2',
-        entriId: 'entri-102',
-        hashSebelumnya: '32c3df4bf1c0b8eda60f8d655ce0defb32ce820861baa7c129ff7f59646b0717',
-        hashSaatIni: 'ebfcf2c8526790c3fb84e7964d959b4b2dfecf7709b1d4ca751f947e6746d3a7',
-        waktuPenyegelan: '2026-10-06T14:30:00Z',
-        statusIntegritas: 'VALID',
-      },
-    ];
-    setSegelList(listAwal);
-    verifikasiIntegritasRantai(listAwal, INITIAL_ENTRI).then(setStatusIntegritas);
+    async function initChain() {
+      const e1 = INITIAL_ENTRI.find((e) => e.id === 'entri-101');
+      const e2 = INITIAL_ENTRI.find((e) => e.id === 'entri-102');
+
+      if (e1 && e2) {
+        const genesisHash = '0000000000000000000000000000000000000000000000000000000000000000';
+        const s1 = await segelEntriBaru(e1, genesisHash);
+        const s2 = await segelEntriBaru(e2, s1.hashSaatIni);
+        const list = [s1, s2];
+        setSegelList(list);
+        const hasil = await verifikasiIntegritasRantai(list, INITIAL_ENTRI);
+        setStatusIntegritas(hasil);
+      }
+    }
+    initChain();
   }, []);
 
   // 2. Compute SAW Rankings
@@ -74,6 +69,7 @@ export default function SigapDashboard() {
   // 3. Toggle Tamper Simulation
   const handleToggleTamper = async () => {
     if (!isTamperedDemo) {
+      // Alter raw data without updating cryptographic seal
       const entriRusak = entriList.map((e) =>
         e.id === 'entri-101' ? { ...e, skorEksekusi: 5.0, namaKegiatan: 'Ketua Pelaksana PKKMB [DIUBAH PAKSA]' } : e
       );
@@ -82,6 +78,7 @@ export default function SigapDashboard() {
       const hasilVerifikasi = await verifikasiIntegritasRantai(segelList, entriRusak);
       setStatusIntegritas(hasilVerifikasi);
     } else {
+      // Restore clean state
       setEntriList(INITIAL_ENTRI);
       setIsTamperedDemo(false);
       const hasilVerifikasi = await verifikasiIntegritasRantai(segelList, INITIAL_ENTRI);
@@ -130,7 +127,7 @@ export default function SigapDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased font-sans pb-20">
+    <div className="min-h-screen bg-slate-100 text-slate-800 antialiased font-sans pb-20">
       {/* Telkom University Institutional Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -175,7 +172,7 @@ export default function SigapDashboard() {
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-6 pt-8 space-y-6">
-        {/* Organization Filter & Tamper Test Action Bar */}
+        {/* Organization Filter & Tamper Action */}
         <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-slate-500" />
@@ -219,8 +216,8 @@ export default function SigapDashboard() {
         <div
           className={`p-4 rounded-xl border flex items-start gap-3 transition ${
             statusIntegritas.status
-              ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
-              : 'bg-rose-50 border-rose-200 text-rose-900'
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+              : 'bg-rose-50 border-rose-300 text-rose-900'
           }`}
         >
           {statusIntegritas.status ? (
@@ -283,14 +280,14 @@ export default function SigapDashboard() {
                     <tr
                       key={cand.kandidatId}
                       className={`hover:bg-slate-50 transition ${
-                        isSelected ? 'bg-red-50/60 font-semibold' : ''
+                        isSelected ? 'bg-red-50/70 font-semibold' : ''
                       }`}
                     >
                       <td className="py-3 px-4 font-bold text-slate-900">#{cand.peringkat}</td>
                       <td className="py-3 px-4 font-sans text-slate-800">
                         {cand.namaKandidat}
                         {anomali.length > 0 && (
-                          <div className="flex items-center gap-1 text-[11px] text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded mt-1 w-fit font-sans">
+                          <div className="flex items-center gap-1 text-[11px] text-amber-800 bg-amber-50 border border-amber-300 px-2 py-0.5 rounded mt-1 w-fit font-sans">
                             <AlertTriangle className="w-3 h-3 text-amber-600" /> {anomali[0]}
                           </div>
                         )}
@@ -345,8 +342,8 @@ export default function SigapDashboard() {
                   onClick={() => kandidatDipilih && handleKlikSlot(slot.kodePeran)}
                   className={`p-4 rounded-xl border transition cursor-pointer flex flex-col justify-between min-h-[120px] ${
                     kandidatDipilih
-                      ? 'border-red-400 bg-red-50/40 hover:bg-red-50 shadow-sm'
-                      : 'border-slate-200 bg-slate-50/50'
+                      ? 'border-red-400 bg-red-50/50 hover:bg-red-50 shadow-sm'
+                      : 'border-slate-200 bg-slate-50/60'
                   }`}
                 >
                   <div>
@@ -446,7 +443,7 @@ export default function SigapDashboard() {
               rows={4}
               value={alasanTertulis}
               onChange={(e) => setAlasanTertulis(e.target.value)}
-              placeholder="Tuliskan justifikasi objektif (misal: Rekam jejak kepemimpinan spesifik pada divisi logistik atau keselarasan komitmen waktu)..."
+              placeholder="Tuliskan justifikasi objektif (misal: Rekam jejak kepemimpinan spesifik pada divisi kebendaharaan atau keselarasan komitmen waktu)..."
               className="w-full mt-3 bg-slate-50 border border-slate-300 rounded-lg p-3 text-xs text-slate-800 focus:outline-none focus:border-red-600"
             />
 
