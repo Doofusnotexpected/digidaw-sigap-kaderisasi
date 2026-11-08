@@ -16,7 +16,7 @@
 ## Tim Pengembang (Tim Digidaw)
 | Nama Anggota | Program Studi | Peran Teknis & Tanggung Jawab |
 | :--- | :--- | :--- |
-| **Devan Saputra Lawolo** | S1 MBTI (FEB) | Ketua Tim, Strategi Bisnis, Penyusunan Laporan & Materi Pitching |
+| **Devan Saputra Lawolo** | S1 ADBIS (FEB) | Ketua Tim, Strategi Bisnis, Penyusunan Laporan & Materi Pitching |
 | **Muhammad Bevand Januartama** | S1 Rekayasa Perangkat Lunak | Arsitektur Antarmuka (Frontend UI/UX), Alur Pengguna & Desain Komponen |
 | **Muhammad Avandra Lukito** | S1 Informatika | Logika Sisi Server, Kriptografi SHA-256, Mesin SAW & Integritas Basis Data |
 
