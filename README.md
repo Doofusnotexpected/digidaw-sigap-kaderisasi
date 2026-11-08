@@ -3,6 +3,11 @@
 > **Finalis Hackathon CR YOUTH 2026 - Tim Digidaw (Universitas Telkom)**  
 > Subtema: *Future Leadership and Human Capital Management*
 
+# SIGAP Kaderisasi — Telkom University
+> Sistem Integritas Kaderisasi & Audit Suksesi Ormawa Telkom University (CR YOUTH 2026)
+
+🔗 **Live Demo:** https://digidaw-sigap-kaderisasi-y8qu.vercel.app
+
 ---
 
 ## Ringkasan Eksekutif
