@@ -322,10 +322,10 @@ export default function SigapDashboard() {
         {/* Section 2: Cabinet Role Assignment Simulator */}
         <section className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div className="mb-4">
-            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <h1 className="text-sm font-bold text-slate-900 flex items-center gap-2">
               <Users className="w-4 h-4 text-red-600" />
               Simulator Penempatan Struktur Kabinet (Click-to-Assign)
-            </h2>
+            </h1>
             <p className="text-xs text-slate-500 mt-0.5">
               {kandidatDipilih 
                 ? 'Kandidat telah dipilih di atas! Sekarang klik salah satu kotak peran di bawah untuk menetapkan.'
