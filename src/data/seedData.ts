@@ -2,24 +2,25 @@
 import { Pengguna, EntriKontribusi, SegelHash, PeranKabinet } from '../types';
 
 export const DATA_PENGGUNA: Pengguna[] = [
-  // BEM KEMA Telkom University
-  { id: 'usr-1', nim: '1301230041', nama: 'Raka Pratama Wijaya', email: 'raka@student.telkomuniversity.ac.id', jurusan: 'S1 Informatika', angkatan: '2023', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
-  { id: 'usr-2', nim: '1401230112', nama: 'Nadia Shafira Putri', email: 'nadia@student.telkomuniversity.ac.id', jurusan: 'S1 MBTI (FEB)', angkatan: '2023', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
-  { id: 'usr-3', nim: '1302230088', nama: 'Gilang Ramadhan Putra', email: 'gilang@student.telkomuniversity.ac.id', jurusan: 'S1 Rekayasa Perangkat Lunak', angkatan: '2023', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
+  // BEM KEMA Telkom University (Kandidat A, B, C, etc.)
+  { id: 'usr-1', nim: '1301230041', nama: 'Raka Pratama Wijaya (Kandidat A)', email: 'raka@student.telkomuniversity.ac.id', jurusan: 'S1 Informatika', angkatan: '2023', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
+  { id: 'usr-2', nim: '1401230112', nama: 'Nadia Shafira Putri (Kandidat B)', email: 'nadia@student.telkomuniversity.ac.id', jurusan: 'S1 MBTI (FEB)', angkatan: '2023', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
+  { id: 'usr-3', nim: '1302230088', nama: 'Gilang Ramadhan Putra (Kandidat C)', email: 'gilang@student.telkomuniversity.ac.id', jurusan: 'S1 RPL', angkatan: '2023', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
   { id: 'usr-4', nim: '1202230019', nama: 'Alya Zahra Maharani', email: 'alya@student.telkomuniversity.ac.id', jurusan: 'S1 Sistem Informasi', angkatan: '2023', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
   { id: 'usr-5', nim: '1101240054', nama: 'Dimas Aditya Nugroho', email: 'dimas@student.telkomuniversity.ac.id', jurusan: 'S1 Teknik Telekomunikasi', angkatan: '2024', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
-  { id: 'usr-6', nim: '1601240093', nama: 'Farhan Rizky Maulana', email: 'farhan@student.telkomuniversity.ac.id', jurusan: 'S1 Desain Komunikasi Visual', angkatan: '2024', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
+  { id: 'usr-6', nim: '1601240093', nama: 'Farhan Rizky Maulana', email: 'farhan@student.telkomuniversity.ac.id', jurusan: 'S1 DKV', angkatan: '2024', ormawaId: 'BEM_TELU', peranSistem: 'ANGGOTA' },
 
   // UKM SEARCH Telkom University
   { id: 'usr-7', nim: '1401230205', nama: 'Kezia Aurelia Tan', email: 'kezia@student.telkomuniversity.ac.id', jurusan: 'S1 MBTI (FEB)', angkatan: '2023', ormawaId: 'UKM_SEARCH', peranSistem: 'ANGGOTA' },
   { id: 'usr-8', nim: '1301230177', nama: 'Bagas Satrio Wibowo', email: 'bagas@student.telkomuniversity.ac.id', jurusan: 'S1 Informatika', angkatan: '2023', ormawaId: 'UKM_SEARCH', peranSistem: 'ANGGOTA' },
   { id: 'usr-9', nim: '1201230062', nama: 'Luthfi Hakim Siregar', email: 'luthfi@student.telkomuniversity.ac.id', jurusan: 'S1 Teknik Industri', angkatan: '2023', ormawaId: 'UKM_SEARCH', peranSistem: 'ANGGOTA' },
   { id: 'usr-10', nim: '1501230039', nama: 'Salma Nurul Izzah', email: 'salma@student.telkomuniversity.ac.id', jurusan: 'S1 Ilmu Komunikasi', angkatan: '2023', ormawaId: 'UKM_SEARCH', peranSistem: 'ANGGOTA' },
-  { id: 'usr-11', nim: '1302240021', nama: 'Reyhan Putra Pratama', email: 'reyhan@student.telkomuniversity.ac.id', jurusan: 'S1 Rekayasa Perangkat Lunak', angkatan: '2024', ormawaId: 'UKM_SEARCH', peranSistem: 'ANGGOTA' },
+  { id: 'usr-11', nim: '1302240021', nama: 'Reyhan Putra Pratama', email: 'reyhan@student.telkomuniversity.ac.id', jurusan: 'S1 RPL', angkatan: '2024', ormawaId: 'UKM_SEARCH', peranSistem: 'ANGGOTA' },
   { id: 'usr-12', nim: '1402240081', nama: 'Tiara Kusuma Dewi', email: 'tiara@student.telkomuniversity.ac.id', jurusan: 'S1 Akuntansi', angkatan: '2024', ormawaId: 'UKM_SEARCH', peranSistem: 'ANGGOTA' },
 ];
 
 export const INITIAL_ENTRI: EntriKontribusi[] = [
+  // Kandidat A (Raka): Target SAW = 90.0 (4.6, 4.4, 4.5, 4.5)
   {
     id: 'entri-101',
     kandidatId: 'usr-1',
@@ -28,15 +29,16 @@ export const INITIAL_ENTRI: EntriKontribusi[] = [
     peranKegiatan: 'Project Lead',
     tautanBukti: 'https://telkomuniversity.ac.id/sk-pkkmb-2026.pdf',
     tanggalKegiatan: '2026-09-12',
-    skorKepemimpinan: 5.0,
-    skorEksekusi: 4.8,
-    skorKolaborasi: 4.6,
-    skorDampak: 4.9,
+    skorKepemimpinan: 4.6,
+    skorEksekusi: 4.4,
+    skorKolaborasi: 4.5,
+    skorDampak: 4.5,
     statusVerifikasi: 'DISETUJUI',
     verifikatorId: 'pembina-1',
     verifikatorNama: 'Dr. Hendra Wijaya (Pembina BEM)',
     waktuVerifikasi: '2026-09-15T10:00:00Z',
   },
+  // Kandidat B (Nadia): Target SAW = 92.2 (4.3, 5.0, 4.7, 4.4)
   {
     id: 'entri-102',
     kandidatId: 'usr-2',
@@ -48,13 +50,13 @@ export const INITIAL_ENTRI: EntriKontribusi[] = [
     skorKepemimpinan: 4.3,
     skorEksekusi: 5.0,
     skorKolaborasi: 4.7,
-    skorDampak: 4.5,
+    skorDampak: 4.4,
     statusVerifikasi: 'DISETUJUI',
     verifikatorId: 'kabid-1',
     verifikatorNama: 'Rizwan Hakim (Kabid Internal)',
     waktuVerifikasi: '2026-10-06T14:30:00Z',
   },
-  // 6 Entri lonjakan H-7 (Gilang Ramadhan terus pemicu penanda pola anomali)
+  // Kandidat C (Gilang): Target SAW = 84.4 (4.2, 4.0, 4.6, 4.2) + Trigger Anomaly Spike
   ...[1, 2, 3, 4, 5, 6].map((idx) => ({
     id: `entri-spike-${idx}`,
     kandidatId: 'usr-3',
@@ -63,15 +65,68 @@ export const INITIAL_ENTRI: EntriKontribusi[] = [
     peranKegiatan: 'Divisi Logistik',
     tautanBukti: `https://telkomuniversity.ac.id/sertif-adhoc-${idx}.pdf`,
     tanggalKegiatan: `2026-11-0${idx}`,
-    skorKepemimpinan: 4.1,
-    skorEksekusi: 3.9,
-    skorKolaborasi: 4.0,
-    skorDampak: 3.8,
+    skorKepemimpinan: 4.2,
+    skorEksekusi: 4.0,
+    skorKolaborasi: 4.6,
+    skorDampak: 4.2,
     statusVerifikasi: 'DISETUJUI' as const,
     verifikatorId: 'kabid-relasi',
-    verifikatorNama: 'Budi Santoso (Kabid Relasi)', // Verifikator dominan
+    verifikatorNama: 'Budi Santoso (Kabid Relasi)',
     waktuVerifikasi: `2026-11-0${idx}T18:00:00Z`,
   })),
+
+  // UKM SEARCH Seed Entries (Kezia, Bagas, Luthfi)
+  {
+    id: 'entri-search-1',
+    kandidatId: 'usr-7',
+    ormawaId: 'UKM_SEARCH',
+    namaKegiatan: 'Lead Researcher Forum Ilmiah Mahasiswa Nasional',
+    peranKegiatan: 'Ketua Peneliti',
+    tautanBukti: 'https://telkomuniversity.ac.id/search-fim-2026.pdf',
+    tanggalKegiatan: '2026-09-20',
+    skorKepemimpinan: 4.8,
+    skorEksekusi: 4.7,
+    skorKolaborasi: 4.5,
+    skorDampak: 4.8,
+    statusVerifikasi: 'DISETUJUI',
+    verifikatorId: 'pembina-search',
+    verifikatorNama: 'Ir. Dedi Kurniawan (Pembina SEARCH)',
+    waktuVerifikasi: '2026-09-25T11:00:00Z',
+  },
+  {
+    id: 'entri-search-2',
+    kandidatId: 'usr-8',
+    ormawaId: 'UKM_SEARCH',
+    namaKegiatan: 'Workshop Riset Big Data & Machine Learning',
+    peranKegiatan: 'Instruktur Teknis',
+    tautanBukti: 'https://telkomuniversity.ac.id/search-workshop.pdf',
+    tanggalKegiatan: '2026-10-12',
+    skorKepemimpinan: 4.4,
+    skorEksekusi: 4.6,
+    skorKolaborasi: 4.6,
+    skorDampak: 4.3,
+    statusVerifikasi: 'DISETUJUI',
+    verifikatorId: 'kabid-search',
+    verifikatorNama: 'Ahmad Faisal (Kabid Riset)',
+    waktuVerifikasi: '2026-10-14T15:00:00Z',
+  },
+  {
+    id: 'entri-search-3',
+    kandidatId: 'usr-9',
+    ormawaId: 'UKM_SEARCH',
+    namaKegiatan: 'Publikasi Jurnal Terindeks Sinta 2',
+    peranKegiatan: 'Penulis Pertama',
+    tautanBukti: 'https://telkomuniversity.ac.id/jurnal-sinta.pdf',
+    tanggalKegiatan: '2026-10-28',
+    skorKepemimpinan: 4.0,
+    skorEksekusi: 4.5,
+    skorKolaborasi: 4.2,
+    skorDampak: 4.6,
+    statusVerifikasi: 'DISETUJUI',
+    verifikatorId: 'kabid-search',
+    verifikatorNama: 'Ahmad Faisal (Kabid Riset)',
+    waktuVerifikasi: '2026-10-30T09:00:00Z',
+  },
 ];
 
 export const INITIAL_SLOT_PERAN: PeranKabinet[] = [

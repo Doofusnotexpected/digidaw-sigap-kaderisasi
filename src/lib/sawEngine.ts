@@ -1,11 +1,12 @@
 // src/lib/sawEngine.ts
 import { EntriKontribusi } from '../types';
 
+// Locked Official CR YOUTH 2026 Weights (Tabel 6 Laporan & Slide 7)
 export const BOBOT_SAW = {
-  kepemimpinan: 0.35,
+  kepemimpinan: 0.30,
   eksekusi: 0.30,
   kolaborasi: 0.20,
-  dampak: 0.15,
+  dampak: 0.20,
 };
 
 export interface SkorKandidatSAW {
@@ -26,14 +27,14 @@ export function hitungMatriksSAW(
     return {
       id: k.id,
       nama: k.nama,
-      kepemimpinan: valid.reduce((s, e) => s + e.skorKepemimpinan, 0) / count,
-      eksekusi: valid.reduce((s, e) => s + e.skorEksekusi, 0) / count,
-      kolaborasi: valid.reduce((s, e) => s + e.skorKolaborasi, 0) / count,
-      dampak: valid.reduce((s, e) => s + e.skorDampak, 0) / count,
+      hasEntries: valid.length > 0,
+      kepemimpinan: valid.length > 0 ? valid.reduce((s, e) => s + e.skorKepemimpinan, 0) / count : 3.5,
+      eksekusi: valid.length > 0 ? valid.reduce((s, e) => s + e.skorEksekusi, 0) / count : 3.5,
+      kolaborasi: valid.length > 0 ? valid.reduce((s, e) => s + e.skorKolaborasi, 0) / count : 3.5,
+      dampak: valid.length > 0 ? valid.reduce((s, e) => s + e.skorDampak, 0) / count : 3.5,
     };
   });
 
-  // Skala benefit max (standar evaluasi 5.0)
   const maxK = 5.0;
   const maxE = 5.0;
   const maxKo = 5.0;
@@ -66,17 +67,15 @@ export function hitungMatriksSAW(
     .map((item, index) => ({ ...item, peringkat: index + 1 }));
 }
 
-// 3 Aturan Utk Penanda Pola (Deterministik & Dapat Dijelaskan)
+// 2 Candidate-Level Deterministic Anomaly Rules (Rule 3 is evaluated at assignment time)
 export function periksaPenandaPola(
   kandidatId: string,
-  semuaEntri: EntriKontribusi[],
-  kandidatTerpilihPeringkat: number,
-  alasanTertulis: string
+  semuaEntri: EntriKontribusi[]
 ): string[] {
   const flags: string[] = [];
   const entriKandidat = semuaEntri.filter((e) => e.kandidatId === kandidatId && e.statusVerifikasi === 'DISETUJUI');
 
-  // Aturan 1: Lonjakan Persetujuan buat H-7
+  // Rule 1: Approval Spike (>5 approvals in 7 days before succession)
   const cutoff = new Date('2026-11-08T00:00:00Z').getTime();
   const lonjakan = entriKandidat.filter((e) => {
     const t = new Date(e.waktuVerifikasi).getTime();
@@ -84,10 +83,10 @@ export function periksaPenandaPola(
     return selisihHari >= 0 && selisihHari <= 7;
   });
   if (lonjakan.length > 5) {
-    flags.push(`Penanda Pola: Lonjakan ${lonjakan.length} persetujuan dalam 7 hari menjelang periode suksesi.`);
+    flags.push(`Penanda Pola: Lonjakan ${lonjakan.length} persetujuan dalam 7 hari menjelang suksesi.`);
   }
 
-  // Aturan 2: Verifikator Dominan
+  // Rule 2: Single Verifier Dominance (>70% entries approved by one person)
   if (entriKandidat.length >= 4) {
     const counts: Record<string, number> = {};
     entriKandidat.forEach((e) => {
@@ -97,13 +96,6 @@ export function periksaPenandaPola(
       if (jml / entriKandidat.length > 0.7) {
         flags.push(`Penanda Pola: Verifikator dominan terdeteksi (${nama} menyetujui ${((jml / entriKandidat.length) * 100).toFixed(0)}% entri).`);
       }
-    }
-  }
-
-  // Aturan 3: Alasanya Tertulis Wajib
-  if (kandidatTerpilihPeringkat > 1) {
-    if (!alasanTertulis || alasanTertulis.trim().length < 20) {
-      flags.push(`Peringatan Etik: Menetapkan kandidat peringkat #${kandidatTerpilihPeringkat} tanpa justifikasi tertulis yang memadai (minimal 20 karakter).`);
     }
   }
 
